@@ -22,7 +22,8 @@ const OutlinePage: React.FC = () => {
   );
 
   const [activeTab, setActiveTab] = useState<string>(TABS.OUTLINE);
-  const [selectedLayoutGroup, setSelectedLayoutGroup] = useState<LayoutGroup | null>(null);
+  const [selectedLayoutGroup, setSelectedLayoutGroup] =
+    useState<LayoutGroup | null>(null);
   // Custom hooks
   const streamState = useOutlineStreaming(presentation_id);
   const { handleDragEnd, handleAddSlide } = useOutlineManagement(outlines);
@@ -36,7 +37,6 @@ const OutlinePage: React.FC = () => {
     return <EmptyStateView />;
   }
 
-
   return (
     <div className="h-[calc(100vh-72px)]">
       <OverlayLoader
@@ -48,10 +48,16 @@ const OutlinePage: React.FC = () => {
 
       <Wrapper className="h-full flex flex-col w-full">
         <div className="flex-grow overflow-y-hidden w-[1200px] mx-auto">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="h-full flex flex-col">
+          <Tabs
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="h-full flex flex-col"
+          >
             <TabsList className="grid w-[50%] mx-auto my-4 grid-cols-2">
-              <TabsTrigger value={TABS.OUTLINE}>Outline & Content</TabsTrigger>
-              <TabsTrigger value={TABS.LAYOUTS}>Select Template</TabsTrigger>
+              <TabsTrigger value={TABS.OUTLINE}>
+                Nội dung slide bài giảng
+              </TabsTrigger>
+              <TabsTrigger value={TABS.LAYOUTS}>Chọn mẫu bài giảng</TabsTrigger>
             </TabsList>
 
             <div className="flex-grow w-full overflow-y-auto custom_scrollbar">

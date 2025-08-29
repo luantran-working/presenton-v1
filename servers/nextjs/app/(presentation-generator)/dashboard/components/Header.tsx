@@ -15,35 +15,55 @@ const Header = () => {
       <Wrapper>
         <div className="flex items-center justify-between py-1">
           <div className="flex items-center gap-3">
-            {(pathname !== "/upload" && pathname !== "/dashboard") && <BackBtn />}
-            <Link href="/dashboard" onClick={() => trackEvent(MixpanelEvent.Navigation, { from: pathname, to: "/dashboard" })}>
-              <img
-                src="/logo-white.png"
-                alt="Presentation logo"
-                className="h-16"
-              />
+            {pathname !== "/upload" && pathname !== "/dashboard" && <BackBtn />}
+            <Link
+              href="/dashboard"
+              onClick={() =>
+                trackEvent(MixpanelEvent.Navigation, {
+                  from: pathname,
+                  to: "/dashboard",
+                })
+              }
+            >
+              <p className="text-lg font-bold font-inter text-white">
+                AI cung cấp bởi IIT
+              </p>
             </Link>
           </div>
           <div className="flex items-center gap-3">
             <Link
-              href="/custom-template"
+              href="/upload"
               prefetch={false}
-              onClick={() => trackEvent(MixpanelEvent.Navigation, { from: pathname, to: "/custom-template" })}
+              onClick={() =>
+                trackEvent(MixpanelEvent.Navigation, {
+                  from: pathname,
+                  to: "/upload",
+                })
+              }
               className="flex items-center gap-2 px-3 py-2 text-white hover:bg-primary/80 rounded-md transition-colors outline-none"
               role="menuitem"
             >
               <FilePlus2 className="w-5 h-5" />
-              <span className="text-sm font-medium font-inter">Create Template</span>
+              <span className="text-sm font-medium font-inter">
+                Tạo slide bài giảng
+              </span>
             </Link>
             <Link
               href="/template-preview"
               prefetch={false}
-              onClick={() => trackEvent(MixpanelEvent.Navigation, { from: pathname, to: "/template-preview" })}
+              onClick={() =>
+                trackEvent(MixpanelEvent.Navigation, {
+                  from: pathname,
+                  to: "/template-preview",
+                })
+              }
               className="flex items-center gap-2 px-3 py-2 text-white hover:bg-primary/80 rounded-md transition-colors outline-none"
               role="menuitem"
             >
               <Layout className="w-5 h-5" />
-              <span className="text-sm font-medium font-inter">Templates</span>
+              <span className="text-sm font-medium font-inter">
+                Thư viện mẫu
+              </span>
             </Link>
             <HeaderNav />
           </div>

@@ -20,7 +20,12 @@ const LayoutPreview = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [summaryMap, setSummaryMap] = useState<Record<string, { lastUpdatedAt?: number; name?: string; description?: string }>>({});
+  const [summaryMap, setSummaryMap] = useState<
+    Record<
+      string,
+      { lastUpdatedAt?: number; name?: string; description?: string }
+    >
+  >({});
 
   useEffect(() => {
     const existingScript = document.querySelector(
@@ -39,12 +44,17 @@ const LayoutPreview = () => {
     fetch("/api/v1/ppt/template-management/summary")
       .then((res) => res.json())
       .then((data) => {
-        const map: Record<string, { lastUpdatedAt?: number; name?: string; description?: string }> = {};
+        const map: Record<
+          string,
+          { lastUpdatedAt?: number; name?: string; description?: string }
+        > = {};
         if (data && Array.isArray(data.presentations)) {
           for (const p of data.presentations) {
             const slug = `custom-${p.presentation_id}`;
             map[slug] = {
-              lastUpdatedAt: p.last_updated_at ? new Date(p.last_updated_at).getTime() : 0,
+              lastUpdatedAt: p.last_updated_at
+                ? new Date(p.last_updated_at).getTime()
+                : 0,
               name: p.template?.name,
               description: p.template?.description,
             };
@@ -71,7 +81,9 @@ const LayoutPreview = () => {
 
   // Sort custom groups by last_updated_at desc using summaryMap
   const customGroupsSorted = [...customGroups].sort(
-    (a, b) => (summaryMap[b.groupName]?.lastUpdatedAt || 0) - (summaryMap[a.groupName]?.lastUpdatedAt || 0)
+    (a, b) =>
+      (summaryMap[b.groupName]?.lastUpdatedAt || 0) -
+      (summaryMap[a.groupName]?.lastUpdatedAt || 0)
   );
 
   // Handle loading state
@@ -95,7 +107,7 @@ const LayoutPreview = () => {
       <div className=" sticky top-0 z-30">
         <div className="max-w-7xl mx-auto border-b px-6 py-6">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900">All Templates</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Thư viện mẫu</h1>
             <p className="text-gray-600 mt-2">
               {layoutGroups.length} templates
             </p>
@@ -105,20 +117,31 @@ const LayoutPreview = () => {
         {/* In Built Templates */}
         <section className="h-full pt-16 flex justify-center items-center">
           <div className="max-w-7xl mx-auto px-6 py-6 w-full">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">In Built Templates</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Mẫu có sẵn
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {inBuiltGroups.map((group) => {
-                const isCustom = group.groupName.toLowerCase().startsWith("custom-");
+                const isCustom = group.groupName
+                  .toLowerCase()
+                  .startsWith("custom-");
                 const meta = summaryMap[group.groupName];
-                const displayName = isCustom && meta?.name ? meta.name : group.groupName;
-                const displayDescription = isCustom && meta?.description ? meta.description : group.settings.description;
+                const displayName =
+                  isCustom && meta?.name ? meta.name : group.groupName;
+                const displayDescription =
+                  isCustom && meta?.description
+                    ? meta.description
+                    : group.settings.description;
                 return (
                   <Card
                     key={group.groupName}
                     className="cursor-pointer hover:shadow-md transition-all duration-200 group"
                     onClick={() => {
-                      trackEvent(MixpanelEvent.Navigation, { from: pathname, to: `/template-preview/${group.groupName}` });
-                      router.push(`/template-preview/${group.groupName}`)
+                      trackEvent(MixpanelEvent.Navigation, {
+                        from: pathname,
+                        to: `/template-preview/${group.groupName}`,
+                      });
+                      router.push(`/template-preview/${group.groupName}`);
                     }}
                   >
                     <div className="p-6">
@@ -159,21 +182,28 @@ const LayoutPreview = () => {
         <section className="h-full pt-8 pb-16 flex justify-center items-center">
           <div className="max-w-7xl mx-auto px-6 py-6 w-full">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-semibold text-gray-900">Custom AI Templates</h2>
+              <h2 className="text-xl font-semibold text-gray-900">
+                Mẫu cá nhân
+              </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {customGroupsSorted.length > 0 ? (
                 customGroupsSorted.map((group) => {
                   const meta = summaryMap[group.groupName];
                   const displayName = meta?.name ? meta.name : group.groupName;
-                  const displayDescription = meta?.description ? meta.description : group.settings.description;
+                  const displayDescription = meta?.description
+                    ? meta.description
+                    : group.settings.description;
                   return (
                     <Card
                       key={group.groupName}
                       className="cursor-pointer hover:shadow-md transition-all duration-200 group"
                       onClick={() => {
-                        trackEvent(MixpanelEvent.Navigation, { from: pathname, to: `/template-preview/${group.groupName}` });
-                        router.push(`/template-preview/${group.groupName}`)
+                        trackEvent(MixpanelEvent.Navigation, {
+                          from: pathname,
+                          to: `/template-preview/${group.groupName}`,
+                        });
+                        router.push(`/template-preview/${group.groupName}`);
                       }}
                     >
                       <div className="p-6">
@@ -205,8 +235,11 @@ const LayoutPreview = () => {
                 <Card
                   className="cursor-pointer hover:shadow-md transition-all border-blue-500 duration-200 group"
                   onClick={() => {
-                    trackEvent(MixpanelEvent.Navigation, { from: pathname, to: `/custom-template` });
-                    router.push(`/custom-template`)
+                    trackEvent(MixpanelEvent.Navigation, {
+                      from: pathname,
+                      to: `/upload`,
+                    });
+                    router.push(`/upload`);
                   }}
                 >
                   <div className="p-6">
@@ -219,7 +252,7 @@ const LayoutPreview = () => {
                       </div>
                     </div>
                     <p className="text-sm text-gray-600 mb-4">
-                      Create your first custom AI template
+                      Tạo custom template của riêng bạn
                     </p>
                   </div>
                 </Card>

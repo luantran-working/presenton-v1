@@ -242,11 +242,9 @@ const Header = ({
         <Announcement />
         <Wrapper className="flex items-center justify-between py-1">
           <Link href="/dashboard" className="min-w-[162px]">
-            <img
-              className="h-16"
-              src="/logo-white.png"
-              alt="Presentation logo"
-            />
+            <p className="text-lg font-bold font-inter text-white">
+              AI cung cấp bởi IIT
+            </p>
           </Link>
 
           {/* Desktop Menu */}

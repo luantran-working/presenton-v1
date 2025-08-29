@@ -6,7 +6,6 @@ import Wrapper from "@/components/Wrapper";
 import { DashboardApi } from "@/app/(presentation-generator)/services/api/dashboard";
 import { PresentationGrid } from "@/app/(presentation-generator)/dashboard/components/PresentationGrid";
 
-
 import Header from "@/app/(presentation-generator)/dashboard/components/Header";
 
 const DashboardPage: React.FC = () => {
@@ -52,7 +51,7 @@ const DashboardPage: React.FC = () => {
         <main className="container mx-auto px-4 py-8">
           <section>
             <h2 className="text-2xl font-roboto font-medium mb-6">
-              Slide Presentation
+              Quản lý bài giảng
             </h2>
             <PresentationGrid
               presentations={presentations}
